@@ -9,8 +9,10 @@
 
 1. **Commented Source Code**  
 	![Vulnerable Program](vulnerable_program.c)
-2. **Program Outputs**  
-   - *(Insert 3+ screenshots of the program’s output for different inputs — e.g., `./vulnerable_program 1`, `./vulnerable_program 3`, and `./vulnerable_program 5`.)*  
+2. **Program Outputs**
+     ![Screenshot1](Screenshots/Lab6Task1Screenshot2.png)
+     ![Screenshot2](Screenshots/Lab6Task1Screenshot3.png)
+     ![Screenshot3](Screenshots/Lab6Task1Screenshot4.png)
 
 ---
 
