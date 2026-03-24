@@ -31,18 +31,23 @@ The error happens when a program attempts to write data to a memory location out
 Valgrind reports "invalid write of size 4" to indicate that the program attempted to write four bytes of data to a memory location it is not allowed to access, the number of bytes written being represented by the four.
 
 - **3.** What is an off-by-one error? Do you see this error in the `overRun` function?
-An off-by-one-error is a logic error that occurs commonly and is where a loop or algorithm iterates one time too many or one time too few. I see the error in the 'overRun' function.
+An off-by-one-error is a logic error that occurs commonly and is where a loop or algorithm iterates one time too many or one time too few. I do not see the error in the 'overRun' function.
 - **4.** What is a memory leak? Explain in your own words. Do you see a memory leak in the `overRun` function?  
-  *(Answer here)*  
+A memory leak is an error within a computer program when it fails to release allocated but unnecessary memory. This causes issues such as makin the computer program use more amounts of RAM in the computer system as time passes. I do see a memory leak in the overRun function as 40 bytes of data were lost according to the Valgrind leak summary. 
 - **5.** Can errors like this occur in Java? Why or why not?  
-  *(Answer here)*  
+Errors like that can still occur in Java. Even though the Java programming language has a built in garbage collector which manages memory, objects that are unneeded but still referenced due to programming mistakes can still leak.
 - **6.** Compare the Heap Summary from normal Valgrind output vs. `--leak-check=full`. What additional details are shown?  
-  *(Answer here)*  
+Information that indicates how many bytes of allocated data were lost, and information showing the numbers which indicate lines of code where programming errors began as functions were called.
 
 ### **Updated Code for `overRun` Function**  
 ```c
-/* Insert your corrected overRun function here. 
-   Include inline comments explaining the fix. */
+// Function for triggering buffer overrun
+void safeRun(void) {
+	int *x = malloc(10 * sizeof(int));
+	if (x == NULL) {
+		// Handle allocation failure
+		return;
+	}
 ```
 
 ---
