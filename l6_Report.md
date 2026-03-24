@@ -54,52 +54,91 @@ void safeRun(void) {
 
 ## **Task 3: Uninitialized Pointer Analysis**  
 ### **Screenshots**  
-1. *(Screenshot of `valgrind --tool=memcheck --leak-check=full ./vulnerable_program 2`.)*  
-2. *(Screenshot with `--track-origins=yes` for more detail.)*  
-3. *(Screenshot of fixed function showing no more uninitialized pointer usage issues.)*  
+![Screenshot2](Screenshots/Lab6Task3.png) 
+![Screenshot2](Screenshots/Lab6Task3Screenshot2.png)   
+![Screenshot2](Screenshots/Lab6Task3Screenshot3.png) 
 
 ### **Answers to Questions**  
 - **7.** Where is the memory problem occurring? What does Valgrind report?  
-  *(Answer here)*  
+The memory problem occurs on lines 39 and 43 in the program according to the Valgrind report. Valgrind reports that there is an issue with the strcpy function usage. Valgrind also reports that an unitialised value was created by a stack allocation.
 - **8.** What is an uninitialized pointer? How could it be exploited?  
-  *(Answer here)*  
+An uninitialized pointer is a variable declared as a pointer but not assigned a valid memory address. It can be exploited to cause system crashes, unauthorized memory reads/information leaks, and even arbitrary code execution by writing to unintended memory locations.
 - **9.** What is the difference between a `NULL` pointer and an uninitialized pointer?  
-  *(Answer here)*  
+A null pointer is explicitly assigned a specific known value: "NULL"/"nullptr", which indicates that it does not point to any valid memory location. An uninitialized pointer, however, contains an arbitrary and unknown garbage value that is left over in memory.
 - **10.** What specifically in the code do you believe caused the uninitialized pointer usage?  
-  *(Answer here)*  
+According to the Valgrind report, line 39 was responsible for the uninitialized pointer usage. The free() code had been used at the wrong time, and as a result, unnecessary memory was referenced, thus leading to the uninitialized pointer usage. In short, it had been caused by a dangling pointer.
 - **11.** What additional detail does `--track-origins=yes` provide?  
-  *(Answer here)*  
+It shows the origin of the programming error. In this case, the programming error's source was a stack allocation caused by line 39 in the vulnerable program's code.
 - **12.** "Use of uninitialized value of size 8" — what does the `8` refer to?  
-  *(Answer here)*  
+8 refers to the size, in bytes, of the uninitialized data type the program is using.
 
 ### **Updated Code for `unInitializedPtr` Function**  
 ```c
-/* Insert your corrected unInitializedPtr function here. 
-   Include inline comments explaining the fix. */
+// Function for triggering uninitialized pointer usage
+void InitializedPtr(void) {
+	// Initialize 'buffer' pointer
+	char *buffer = malloc(10 * sizeof(char)); // Allocate memory for buffer
+	if (buffer == NULL) {
+	printf("Memory allocation failed for buffer!\n");
+	return; // Exit if there is a memory allocation failure
+	}
+	
+	// Properly allocate memory for 'c' variable
+	char *c = malloc(10 * sizeof(char));
+	if (c == NULL) {
+		printf("Memory allocation failed for c!\n");
+		free(buffer); // Free any memory allocated previously.
+		return;
+	}
 ```
 
 ---
 
 ## **Task 4: Dangling Pointer Analysis**  
 ### **Screenshots**  
-1. *(Screenshot of `./vulnerable_program 3` without Valgrind — note behavior.)*  
-2. *(Screenshot of Valgrind output: `valgrind --tool=memcheck --leak-check=full --track-origins=yes ./vulnerable_program 3`.)*  
-3. *(Screenshot after fixing `danglingPtr`, showing no error.)*  
+![Screenshot2](Screenshots/Lab6Task4.png) 
+![Screenshot2](Screenshots/Lab6Task4Screenshot2.png) 
+![Screenshot2](Screenshots/Lab6Task4Screenshot3.png) 
 
 ### **Answers to Questions**  
 - **13.** What is the potential issue in the `danglingPtr` function?  
-  *(Answer here)*  
+The potential issue is the placement of the "free()" function within the 'danglingPtr' function. Freeing memory at the wrong time can lead to a dangling pointer.
 - **14.** How could a dangling pointer be exploited?  
-  *(Answer here)*  
+It can be exploited to achieve serious security compromises, especially arbitrary code execution, denial of service attacks, and information leakage.
 - **15.** What does Valgrind report about the freed memory usage?  
-  *(Answer here)*  
+It reports that there were 2 frees in total heap usage. There were also 2 allocations and a total of 1,064 bytes had been allocated.
 - **16.** Why does Valgrind possibly show no final "heap error" even though it’s a dangerous bug?  
-  *(Answer here)*  
+It may report no heap errors because it only detects issues during actual execution of flawed code paths. Valgrind only monitors memory access.
 
 ### **Updated Code for `danglingPtr` Function**  
 ```c
-/* Insert your corrected danglingPtr function here. 
-   Include inline comments explaining the fix. */
+// Function for triggering dangling pointer access
+void PtrSafeguard(void) {
+	int *x;
+	int *y = malloc(10 * sizeof(int));
+	
+	if (y == NULL) {
+		printf("Memory allocation failed!\n");
+		return; // Exit if there is a memory allocation failure
+	}
+	
+	x = y;
+	
+	// Perform operations on variables x or y
+	
+	free(y); // Free memory
+	y = NULL; // Set variable to NULL to avoid accidental use
+	
+	x = NULL; // Set variable to NULL to avoid accidental use
+	
+	// Safely access x or y given that they are NULL
+	if (x != NULL) {
+		int t = x[2]; // Safe, won't be executed
+		printf("Dangling pointer value: %d\n", t);
+	} else {
+		printf("Pointer is NULL, access denied.\n");
+	}
+}
 ```
 
 ---
