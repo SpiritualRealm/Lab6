@@ -18,10 +18,14 @@
 
 ## **Task 2: Out-of-Bounds Write (Valgrind)**
 ### **Screenshots**  
-1. *(Screenshot of running `./vulnerable_program 1` without Valgrind.)*  
-2. *(Screenshot of Valgrind output: `valgrind --tool=memcheck ./vulnerable_program 1`.)*  
-3. *(Screenshot of Valgrind with `--leak-check=full`.)*  
-4. *(Screenshot after fixing the `overRun` function to confirm no more errors.)*  
+1. *(Screenshot of running `./vulnerable_program 1` without Valgrind.)*
+![Screenshot2](Screenshots/Lab6Task2.png) 
+3. *(Screenshot of Valgrind output: `valgrind --tool=memcheck ./vulnerable_program 1`.)*
+![Screenshot2](Screenshots/Lab6Task2Screenshot2.png) 
+5. *(Screenshot of Valgrind with `--leak-check=full`.)*
+![Screenshot2](Screenshots/Lab6Task2Screenshot3.png) 
+7. *(Screenshot after fixing the `overRun` function to confirm no more errors.)*
+![Screenshot2](Screenshots/Lab6Task2Screenshot4.png) 
 
 ### **Answers to Questions**  
 - **1.** Why does this invalid write error happen?  
