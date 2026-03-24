@@ -18,22 +18,20 @@
 
 ## **Task 2: Out-of-Bounds Write (Valgrind)**
 ### **Screenshots**  
-1. *(Screenshot of running `./vulnerable_program 1` without Valgrind.)*
 ![Screenshot2](Screenshots/Lab6Task2.png) 
-3. *(Screenshot of Valgrind output: `valgrind --tool=memcheck ./vulnerable_program 1`.)*
 ![Screenshot2](Screenshots/Lab6Task2Screenshot2.png) 
-5. *(Screenshot of Valgrind with `--leak-check=full`.)*
 ![Screenshot2](Screenshots/Lab6Task2Screenshot3.png) 
-7. *(Screenshot after fixing the `overRun` function to confirm no more errors.)*
 ![Screenshot2](Screenshots/Lab6Task2Screenshot4.png) 
 
 ### **Answers to Questions**  
 - **1.** Why does this invalid write error happen?  
-  *(Answer here)*  
+The error happens when a program attempts to write data to a memory location outside the boundaries of its allocated buffer or array.
+
 - **2.** Why does Valgrind report an "invalid write of size 4"? What does `4` represent?  
-  *(Answer here)*  
-- **3.** What is an off-by-one error? Do you see this error in the `overRun` function?  
-  *(Answer here)*  
+Valgrind reports "invalid write of size 4" to indicate that the program attempted to write four bytes of data to a memory location it is not allowed to access, the number of bytes written being represented by the four.
+
+- **3.** What is an off-by-one error? Do you see this error in the `overRun` function?
+An off-by-one-error is a logic error that occurs commonly and is where a loop or algorithm iterates one time too many or one time too few. I see the error in the 'overRun' function.
 - **4.** What is a memory leak? Explain in your own words. Do you see a memory leak in the `overRun` function?  
   *(Answer here)*  
 - **5.** Can errors like this occur in Java? Why or why not?  
