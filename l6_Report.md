@@ -2,7 +2,9 @@
 ##### CSCY/CSCI 4742: Cybersecurity Programming and Analytics, Spring 2026
 
 **Name & Student ID**: John Paul Bennett Jr., 110412273  
-
+**Name & Student ID**: Earnest Kyle, 109969905
+**Name & Student ID**: Shriram Rajagopal
+**Name & Student ID**: Zachary Lawlor
 ---
 
 ## **Task 1: Implement & Analyze Additional Vulnerabilities**  
