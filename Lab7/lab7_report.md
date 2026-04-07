@@ -1,7 +1,7 @@
 # **Lab 7 Report**  
 ##### CSCY 4742: Cybersecurity Programming and Analytics, Spring 2026
 
-**Name & Student ID**: [Your Full Name], [Your Student ID]  
+**Name & Student ID**: John Paul Bennett Jr., 110412273  
 
 **Please select your course number:**  
 - [ ] CSCY 4742 (Undergraduate)  
@@ -114,7 +114,8 @@
 
 #### Screenshots
 - Provide screenshot of your `iptables` chains and your Wireshark traffic capture.
-
+![Screenshot1](Screenshots/IPTABLES_Chains.png)
+![Screenshot2](Screenshots/Wireshark_Traffic_Capture.png)
 ---
 ### **🔹 Step 2: Testing with Nmap - Aggressive Scan (-T5)**  
 
