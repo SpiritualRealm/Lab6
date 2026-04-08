@@ -107,10 +107,21 @@
 
 #### **Questions**:  
    - Explain your observations regarding packet loss and how the rate limit affects different types of traffic.  
+When I pinged the virtual machine, I notice that there was a significant increase in the number of packets lost. At least 80% of the packets transmitted to the virtual machine had been lost. Rate limit tends to affect ICMP traffic significantly. Overall, rate limiting limits the number of requests sent to a machine, setting thresholds, and works differently with each type of traffic. For example, SYN traffic is limited when rate limiting is used due to the configuration targeting the TCP connections that are being made.
+
    - Does the rate limit completely block all ICMP pings? Why or why not?  
+No. This is because it actually restricts how many can be processed within a given time period.
+
    - Calculate the theoretical and empirical rate of PING packet drops based on network traffic analysis.  
-   - Why is rate-limiting incoming traffic essential for network security and performance?  
+Theoretical rate: 0.99
+Empirical rate: 0.83
+
+   - Why is rate-limiting incoming traffic essential for network security and performance?
+It caps the number of requests a user can make within a given timeframe. In doing so, it can protect against denial of service attacks and brute force login attempts. In terms of performance, it reduces server overload and ensures fair resource utilization.
+ 
    - What potential challenges or drawbacks could arise when implementing rate-limiting in a real-world network environment? How can these be mitigated?  
+Potential challenges such as misconfigured limits, false positives, managing bursty traffic and handling complex distributed environments are challenges that can arise when implementing rate-limiting in a real-world network environment. They can be mitigated by implementing soft limits before hard caps, utilizing the token bucket algorithm to allow for burstiness while averaging throughput, utilizing a centralized, fast data store, authenticated API keys/tokens, and rate limiting at the edge to stop network traffic early in order to prevent bottlenecks.
+
 
 #### Screenshots
 - Provide screenshot of your `iptables` chains and your Wireshark traffic capture.
@@ -128,6 +139,8 @@
 
 #### Screenshots
 - Provide screenshot of your `iptables` chains and your Wireshark traffic capture.
+![Screenshot1](Screenshots/IPTABLES_Chains.png)
+![Screenshot3](Screenshots/Wireshark_Traffic_Capture_NMAP.png)
 
 ---
 ## **Task 4: Logging and Monitoring Firewall Activity (20 pts)**  
