@@ -70,7 +70,7 @@ This means all traffic is currently allowed by default, and there are no custom 
 
 #### Screenshots
 
-![IPTable Rules](screenshots/iptables_-L.png)
+![IPTable Rules](Screenshots/iptables_-L.png)
    
 ---
 
@@ -146,7 +146,7 @@ The successful request and reply sequence confirms that network connectivity is 
 
 
 #### Screenshots
-![Testing Wireshark Traffic](screenshots/part1_step2_wireshark_traffic.png)
+![Testing Wireshark Traffic](Screenshots/part1_step2_wireshark_traffic.png)
 
 ---
 
@@ -212,8 +212,8 @@ After the rule, the Defense VM blocked the requests and returned ICMP unreachabl
 This confirms that the firewall rule is functioning correctly.
 
 #### Screenshots
-![Updated IPTables](screenshots/part1_step3_%20updated_iptables.png)
-![Blocking Incoming Traffic](screenshots/part1_step3_block_incoming_traffic.png)
+![Updated IPTables](Screenshots/part1_step3_%20updated_iptables.png)
+![Blocking Incoming Traffic](Screenshots/part1_step3_block_incoming_traffic.png)
 
 ---
 ### **🔹 Step 4: Testing DROP vs. REJECT**
@@ -279,8 +279,8 @@ This is useful for troubleshooting and internal networks.
 This step clearly demonstrates the functional difference between the two firewall actions.
 
 #### Screenshots
-![Updated IPTables](screenshots/part1_step4_%20updated_iptables.png)
-![Wireshark Traffic](screenshots/part1_step4_wireshark_traffic.png)
+![Updated IPTables](Screenshots/part1_step4_%20updated_iptables.png)
+![Wireshark Traffic](Screenshots/part1_step4_wireshark_traffic.png)
 
 
 
@@ -372,9 +372,9 @@ If the DROP rule came first, it would block all ICMP traffic before the echo-req
 This is why more specific rules should always be placed before broader rules.
 
 #### Screenshots
-![Updated IPTables](screenshots/part2_step1_iptables.png)
-![Wireshark Traffic](screenshots/part2_step1_ping_attack.png)
-![Wireshark Traffic](screenshots/part2_step1_ping_defense.png)
+![Updated IPTables](Screenshots/part2_step1_iptables.png)
+![Wireshark Traffic](Screenshots/part2_step1_ping_attack.png)
+![Wireshark Traffic](Screenshots/part2_step1_ping_defense.png)
 
 ---
 
@@ -460,9 +460,9 @@ This policy is commonly used in secure environments where a host needs outbound 
 This reduces exposure to network discovery scans and improves stealth and security.
 
 #### Screenshots
-![Updated IPTables](screenshots/part2_step2_iptables.png)
-![Ping Attack](screenshots/part2_step2_ping_attack.png)
-![Ping Defense](screenshots/part2_step2_ping_defense.png)
+![Updated IPTables](Screenshots/part2_step2_iptables.png)
+![Ping Attack](Screenshots/part2_step2_ping_attack.png)
+![Ping Defense](Screenshots/part2_step2_ping_defense.png)
 
 ---
 
@@ -605,12 +605,12 @@ The Nmap scan confirms:
 This matches the Wireshark observations and firewall rules.
 
 #### Screenshots
-![Web Server 8000](screenshots/part3_step3_port_8000.png)
-![Web Server 8001](screenshots/part3_step3_port_8001.png)
-![IPTables](screenshots/part3_step4_iptables.png)
-![Wireshark Traffic Port 8000](screenshots/part3_step4_port_8000_traffic.png)
-![Wireshark Traffic Port 8001](screenshots/part3_step4_port_8001_traffic.png)
-![nmap scan](screenshots/part3_step4_scan.png)
+![Web Server 8000](Screenshots/part3_step3_port_8000.png)
+![Web Server 8001](Screenshots/part3_step3_port_8001.png)
+![IPTables](Screenshots/part3_step4_iptables.png)
+![Wireshark Traffic Port 8000](Screenshots/part3_step4_port_8000_traffic.png)
+![Wireshark Traffic Port 8001](Screenshots/part3_step4_port_8001_traffic.png)
+![nmap scan](Screenshots/part3_step4_scan.png)
 
 
 ---
