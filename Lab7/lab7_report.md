@@ -107,19 +107,24 @@
 
 #### **Questions**:  
    - Explain your observations regarding packet loss and how the rate limit affects different types of traffic.  
+
 When I pinged the virtual machine, I notice that there was a significant increase in the number of packets lost. At least 80% of the packets transmitted to the virtual machine had been lost. Rate limit tends to affect ICMP traffic significantly. Overall, rate limiting limits the number of requests sent to a machine, setting thresholds, and works differently with each type of traffic. For example, SYN traffic is limited when rate limiting is used due to the configuration targeting the TCP connections that are being made.
 
    - Does the rate limit completely block all ICMP pings? Why or why not?  
+
 No. This is because it actually restricts how many can be processed within a given time period.
 
    - Calculate the theoretical and empirical rate of PING packet drops based on network traffic analysis.  
+
 Theoretical rate: 0.99
 Empirical rate: 0.83
 
    - Why is rate-limiting incoming traffic essential for network security and performance?
+
 It caps the number of requests a user can make within a given timeframe. In doing so, it can protect against denial of service attacks and brute force login attempts. In terms of performance, it reduces server overload and ensures fair resource utilization.
  
    - What potential challenges or drawbacks could arise when implementing rate-limiting in a real-world network environment? How can these be mitigated?  
+
 Potential challenges such as misconfigured limits, false positives, managing bursty traffic and handling complex distributed environments are challenges that can arise when implementing rate-limiting in a real-world network environment. They can be mitigated by implementing soft limits before hard caps, utilizing the token bucket algorithm to allow for burstiness while averaging throughput, utilizing a centralized, fast data store, authenticated API keys/tokens, and rate limiting at the edge to stop network traffic early in order to prevent bottlenecks.
 
 
@@ -133,9 +138,20 @@ Potential challenges such as misconfigured limits, false positives, managing bur
 
 #### **Questions:**  
    - Does the scan complete successfully? If so, is the result accurate (does it correctly detect port **8000** as open)?  
+
+Yes, the scan does complete successfully. It correctly detects port **8000** as open.
+
    - Based on observations, how does the **scan rate** affect the accuracy and detection of open ports?  
-   - Referencing the [Nmap Performance Guide](https://nmap.org/book/performance-timing-templates.html), how do timing templates influence scan behavior and detection efficiency?  
+
+Excessively high scan rates can reduce detection accuracy. This overloads networks, causing dropped packets which carry information on the open ports that the machine doing the scanning has missed. Scan rate dictates the balance between speed and accuracy in port scanning.
+  
+   - Referencing the [Nmap Performance Guide](https://nmap.org/book/performance-timing-templates.html), how do timing templates influence scan behavior and detection efficiency?
+
+Timing templates allow users to balance scan speed with accuracy and IDS(Intrusion Detection System) evasion. The templates adjust packet delays and parallelism. Lower settings offer stealth at the expense of speed. Higher settings prioritize rapid, aggressive scanning over reliability.
+
    - Which **Nmap timing profile(s)** (`-T0` to `-T4`) could potentially bypass this rate-limiting rule? Justify your answer based on scan behavior and rate thresholds. What is the main drawback of choosing this/these profile(s)?
+
+NMAP timing profile -T0, which is the paranoid setting, could potentially bypass the rate-limiting rule. It is the slowest template, designed for evasion of detection. It waits five minutes before performing the next scan. The main drawback of choosing this timing profile is that it is extremely slow.
 
 #### Screenshots
 - Provide screenshot of your `iptables` chains and your Wireshark traffic capture.
@@ -151,6 +167,10 @@ Potential challenges such as misconfigured limits, false positives, managing bur
   
 #### Screenshots
 - Provide screenshot of your `iptables` chains and your Wireshark traffic capture for all three scenarios (website visits and `nmap`).
+![Screenshot4](Screenshots/IPTables_Chains.png)
+![Screenshot5](Screenshots/Wireshark_Traffic_Port8000.png)
+![Screenshot6](Screenshots/Wireshark_Traffic_Port8001.png)
+![Screenshot7](Screenshots/Wireshark_Traffic_NMAP.png)
 
 ---
 
