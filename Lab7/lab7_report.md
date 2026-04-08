@@ -168,8 +168,14 @@ NMAP timing profile -T0, which is the paranoid setting, could potentially bypass
 #### Screenshots
 - Provide screenshot of your `iptables` chains and your Wireshark traffic capture for all three scenarios (website visits and `nmap`).
 ![Screenshot4](Screenshots/IPTables_Chains.png)
+
+**Port 8000 Wireshark Traffic Capture**
 ![Screenshot5](Screenshots/Wireshark_Traffic_Port8000.png)
+
+**Port 8001 Wireshark Traffic Capture**
 ![Screenshot6](Screenshots/Wireshark_Traffic_Port8001.png)
+
+**NMAP Wireshark Traffic Capture**
 ![Screenshot7](Screenshots/Wireshark_Traffic_NMAP.png)
 
 ---
@@ -177,14 +183,26 @@ NMAP timing profile -T0, which is the paranoid setting, could potentially bypass
 ### **🔹 Step 2: Viewing and Analyzing Firewall Logs**  
 
 #### **Questions:**  
-   - What source IP addresses are attempting to connect?  
-   - What ports are being targeted?  
+   - What source IP addresses are attempting to connect?
+
+10.0.0.66
+
+   - What ports are being targeted?
+
+Ports 8000 and 8001.
+
    - Modify the log search command to filter packets related to **port 8001**. How many entries are recorded in the logs?  
+
+18 entries were recorded in the logs.
+ 
    - How does logging contribute to identifying and mitigating suspicious activity?
+
+It uses real time alerting, allows for incident investigation and improves troubleshooting. All this helps strengthen the security of digital assets and computer systems.
 
 #### Screenshots
 - Provide screenshots of your `dmesg` output for port `8001`
-   
+![Screenshot8](Screenshots/DMESG_Port8001.png)
+
 ---
 
 ## **Task 5: Filtering and Logging Network Attacks (40 pts)**  
