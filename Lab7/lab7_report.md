@@ -719,87 +719,79 @@ It uses real time alerting, allows for incident investigation and improves troub
 
 ---
 
-## **Task 5: Filtering and Logging Network Attacks (40 pts)**  
----
+### **🔹 Step 1: Configuring Rate-Limiting and Logging on Defense VM**
 
-### **🔹 Step 1: Configuring Rate-Limiting and Logging on Defense VM**  
-
-#### **Questions:**  
-   - How many ICMP packets were logged as **exceeding the rate limit**?  
-   - How did the Defense VM handle the attack?  
-   - How would attackers try to bypass this defense?  
+#### **Questions:**
+- **How many ICMP packets were logged as exceeding the rate limit?** Based on the configured rule (`--limit 1/s --limit-burst 5`), the first 5 ICMP packets were accepted immediately as part of the initial burst. After that burst, the firewall restricted incoming pings to exactly 1 per second. Every packet that exceeded this 1-packet-per-second limit during the flood was dropped and logged. The exact number of logged packets depends on the duration of the `ping -f` flood, but it includes the vast majority of the packets sent.
+- **How did the Defense VM handle the attack?** The Defense VM successfully absorbed the initial burst of 5 packets and then actively began dropping and logging the subsequent flood of ICMP requests. This prevented the system resources and bandwidth from being overwhelmed while still allowing a normal, legitimate ping rate of one per second to pass through.
+- **How would attackers try to bypass this defense?** Attackers could bypass this defense by launching a Distributed Denial of Service (DDoS) attack. By sending ICMP packets from thousands of different, unique IP addresses (via a botnet) or by spoofing their source IP addresses, they can distribute the traffic so no single source exceeds the rate limits.
 
 #### Screenshots
-- Provide screenshot of your `iptables` chains, your `dmesg` logs, your ping results on Attack VM and your Wireshark traffic capture.
+![Step 1](Screenshots/Task5Step1Attack.png)
+![Step 1](Screenshots/Task5Step1Defend.png)
 
 ---
-### **🔹 Step 2: Detecting and Logging Regular Nmap Scans**  
+### **🔹 Step 2: Detecting and Logging Regular Nmap Scans**
 
-#### **Questions:**  
-   - How many scan attempts were logged as exceeding the threshold?
-   - Was the scan able to identify any open ports, or was it blocked?  
-   - How does rate-limiting SYN packets help prevent port scanning?  
-   - What modifications could an attacker use to bypass this detection mechanism?  
+#### **Questions:**
+- **How many scan attempts were logged as exceeding the threshold?**
+The rule is configured with `--hitcount 5` over a 10-second window. Therefore, the first 4 SYN packets to different ports from the scanning IP were accepted, and the 5th packet (along with every subsequent packet sent within that 10-second window) triggered the LOG and DROP actions.
+- **Was the scan able to identify any open ports, or was it blocked?** The scan was mostly blocked. Nmap might have successfully identified the state of the first few ports it probed before hitting the 5-packet threshold, but the vast majority of the scan resulted in dropped packets. Consequently, Nmap would incorrectly report the remaining ports as "filtered" or fail to identify them.
+- **How does rate-limiting SYN packets help prevent port scanning?** Port scanning relies on rapidly sending SYN packets to many ports to map a network. Rate-limiting throttles this, forcing an attacker to either slow their scan down to an excruciating crawl or face dropped packets that render their scan results highly inaccurate and useless.
+- **What modifications could an attacker use to bypass this detection mechanism?** An attacker could bypass this by significantly slowing down the scan using timing templates (such as `nmap -T1` or `-T2`), ensuring they send fewer than 5 packets every 10 seconds. They could also use decoy source IPs (`nmap -D`) to mask the true origin, or use packet fragmentation (`nmap -f`) to evade basic tracking rules.
 
 #### Screenshots
-- Provide screenshot of your `iptables` chains, your `dmesg` logs, your `nmap` results on Attack VM and your Wireshark traffic capture.
+![Step 2](Screenshots/Task5Step2Attack.png)
+![Step 2](Screenshots/Task5Step2Defend.png)
 
 ---
+### **🔹 Step 3: Testing Slow and Stealthy Nmap Scans**
 
-### **🔹 Step 3: Testing Slow and Stealthy Nmap Scans**  
-
-
-#### **Questions:**  
-   - How does the detection of a slow scan compare to a rapid scan?  
-   - Was the slow scan still able to identify open ports?  
-   - What modifications could an attacker use to further evade detection?  
-   - How can defensive rules be improved to account for stealthier attacks?  
+#### **Questions:**
+- **How does the detection of a slow scan compare to a rapid scan?** The rapid scan detection only looked back over a short 10-second window. By expanding the tracking window to 60 seconds (`--seconds 60`), the firewall can remember and correlate slower, stealthier packets over a much longer period, catching scans that space out their probes.
+- **Was the slow scan still able to identify open ports?** No, it was still eventually blocked. Even at the slower `-T2` (Polite) scanning speed, Nmap sends probes roughly every 0.4 seconds. This means 5 packets are sent in about 2 seconds, which easily trips the 5-packet-per-60-second threshold.
+- **What modifications could an attacker use to further evade detection?** To evade the 60-second tracking window, an attacker would have to perform an extremely slow "paranoid" scan (e.g., `nmap -T0`), sending a single probe every 15 seconds or more so that no 60-second window ever contains 5 packets. They could also continuously rotate their source IP address.
+- **How can defensive rules be improved to account for stealthier attacks?** Defenders can deploy dedicated Intrusion Detection/Prevention Systems (IDPS) like Snort to detect scan signatures rather than just packet rates. They can also implement port knocking (keeping ports closed until a specific sequence is hit) and use strict "default deny" policies.
 
 #### Screenshots
-- Provide screenshot of your `iptables` chains, your `dmesg` logs, your `nmap` results on Attack VM.
+![Step 3](Screenshots/Task5Step3Attack.png)
+![Step 3](Screenshots/Task5Step3Defend.png)
 
 ---
+### **🔹 Step 4: Detecting, Logging, and Filtering SSH Brute-Force Attacks**
 
-### **🔹 Step 4: Detecting, Logging, and Filtering SSH Brute-Force Attacks**  
-
-#### **Questions**  
-
-   - How many SSH connection attempts were logged before the attacker was blocked?  
-   - Did the Defense VM successfully block further attempts after the threshold was exceeded?  
-   - How might attackers attempt to bypass this defense mechanism?  
-   - What additional measures can enhance SSH security beyond rate-limiting?  
+#### **Questions**
+- **How many SSH connection attempts were logged before the attacker was blocked?** The rule uses a `--hitcount 5` parameter. The first 4 connection attempts to port 22 are permitted to pass through. The 5th connection attempt within the 10-second window is logged and blocked.
+- **Did the Defense VM successfully block further attempts after the threshold was exceeded?** Yes. Once the attacking IP reached the 5-attempt limit within the tracking window, the firewall successfully dropped all further `NEW` TCP connections destined for port 22 from that specific IP address.
+- **How might attackers attempt to bypass this defense mechanism?** Attackers could launch a "low and slow" dictionary attack, trying a single password guess every few minutes to stay under the rate-limit threshold. They could also use a distributed brute-force attack (botnet) where thousands of different IP addresses each try a few passwords.
+- **What additional measures can enhance SSH security beyond rate-limiting?** The most effective measure is to completely disable password authentication and require cryptographic SSH keys. Additional measures include moving the SSH service to a non-standard port (e.g., 2222) to avoid automated scanners, and employing software like Fail2Ban to enact permanent IP bans.
 
 #### Screenshots
-- Provide screenshot of your `iptables` chains, legitimate SSH output on Attack VM, your `dmesg` logs, your `nmap` SSH brute-force output on Attack VM.
+![Part 4](Screenshots/Task5Step4Attack.png)
+![Part 4](Screenshots/Task5Step4Defend.png)
 
 ---
+### **🔹 Step 5: Detecting, Logging, and Filtering SYN Flood Attacks**
 
-### **🔹 Step 5: Detecting, Logging, and Filtering SYN Flood Attacks**  
-
-
-**Questions**  
-
-   - How many SYN packets were logged before the Defense VM blocked further requests?  
-   - Did the Defense VM successfully mitigate the SYN flood attack while allowing normal connections?
-   - Why with ``--rand-source``, the detection fails? Explain.  
-   - What alternative techniques could attackers use to evade this SYN flood protection?  
-   - What additional measures can be taken to improve SYN flood mitigation?  
+**Questions**
+- **How many SYN packets were logged before the Defense VM blocked further requests?** Based on the rule configured with `--hitcount 5`, 4 SYN packets are allowed to pass through normally. Once the 5th SYN packet is received from the same source IP within a 10-second window, the threshold is met, triggering the `LOG` and `DROP` actions for that packet and any subsequent ones.
+- **Did the Defense VM successfully mitigate the SYN flood attack while allowing normal connections?** Yes. The Defense VM successfully mitigated the attack because the `--recent` module tracks connection rates per unique source IP. It dropped the excessive packets coming from the attacker's IP while allowing standard TCP traffic from other unflagged sources.
+- **Why with `--rand-source`, the detection fails? Explain.** The `--rand-source` flag causes `hping3` to randomly spoof the source IP address for every single packet it generates. Because the `iptables` `recent` module tracks hits against specific source IP addresses, no single spoofed IP ever sends enough packets to reach the 5-packet threshold within 10 seconds.
+- **What alternative techniques could attackers use to evade this SYN flood protection?** Instead of spoofing IPs (which breaks the TCP handshake), an attacker could use a distributed botnet (DDoS) to send valid SYN packets from thousands of real, unique IP addresses, ensuring no individual IP triggers the rate-limit threshold.
+- **What additional measures can be taken to improve SYN flood mitigation?** Administrators should enable TCP SYN cookies at the OS level (`sysctl -w net.ipv4.tcp_syncookies=1`), which forces the server to verify the connection before allocating memory. Other measures include reducing the timeout duration for half-open connections or deploying a hardware firewall.
 
 #### Screenshots
-- Provide screenshot of your `iptables` chains, legitimate TCP connection and SYN flooding outputs with and without spoofing on Attack VM, and your `dmesg` logs.
-
+![Step 5](Screenshots/Task5Step5Attack.png)
+![Step 5](Screenshots/Task5Step5Defend.png)
 ---
+### **🔹 Step 6: Detecting, Logging, and Filtering High-Rate HTTP Attacks**
 
-### **🔹 Step 6: Detecting, Logging, and Filtering High-Rate HTTP Attacks**  
- 
-
-#### **Questions**  
-
-   - How many HTTP requests were logged before the Defense VM blocked further requests?  
-   - Did the Defense VM successfully mitigate the HTTP flood while allowing normal web traffic?  
-   - What alternative techniques could attackers use to evade this HTTP flood detection?  
-   - What additional measures can be taken to improve web server protection against HTTP-based DoS attacks?  
+#### **Questions**
+- **How many HTTP requests were logged before the Defense VM blocked further requests?** Based on the rule configured with `--hitcount 15`, 14 HTTP requests are permitted from a single IP within a 30-second window. The 15th request exceeds the limit, triggering the `LOG` and `DROP` actions.
+- **Did the Defense VM successfully mitigate the HTTP flood while allowing normal web traffic?** Yes. By tracking the number of requests a single IP makes specifically to port 80 within 30 seconds, the firewall cuts off the flood from the attacking machine. Legitimate users browsing the site normally from different IPs will not hit the 15-request threshold.
+- **What alternative techniques could attackers use to evade this HTTP flood detection?** Attackers could utilize a botnet to distribute the HTTP requests across many different IP addresses. Alternatively, they could pivot to a "Slowloris" attack, which establishes legitimate connections and sends partial HTTP requests extremely slowly, exhausting the server's connection pool without triggering rate limits.
+- **What additional measures can be taken to improve web server protection against HTTP-based DoS attacks?** Implement a Web Application Firewall (WAF) to filter out malicious HTTP traffic patterns. Set up a reverse proxy (like Cloudflare or Nginx) to absorb traffic floods and offer application-layer rate limiting. Also, configure the web server to aggressively close idle connections.
 
 #### Screenshots
-  - Provide screenshot of your `iptables` chains, legitimate HTTP output and HTTP flood output on Attack VM, and your `dmesg` logs.
-
+![Step 6](Screenshots/Task5Step6Attack.png)
+![Step 6](Screenshots/Task5Step6Defend.png)
