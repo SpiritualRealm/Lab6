@@ -1,7 +1,8 @@
 # **Lab 8 Report**  
 ##### CSCY 4742: Cybersecurity Programming and Analytics, Spring 2026
 
-**Name & Student ID**: John Paul Bennett Jr., 110412273\n
+**Name & Student ID**: John Paul Bennett Jr., 110412273
+
 **Name & Student ID**: Earnest Kyle, 109969905
 
 ---
