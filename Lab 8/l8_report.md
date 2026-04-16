@@ -267,6 +267,6 @@ In this architecture, Snort is deployed as a passive Intrusion Detection System 
 Unlike a passive IDS, a firewall or an Intrusion Prevention System (IPS) sits directly inline with network traffic and can actively manipulate it. To defend against SYN floods, an IPS or firewall can deploy mitigation techniques such as dropping packets that exceed rate limits, utilizing SYN cookies to validate connection requests without allocating memory, or dynamically blacklisting offending source IP addresses to block the flood before it exhausts the target server's resources.
 
 ### **Screenshots**:
-![Snort alert showing SYN flood detection](screenshots/syn_flood_detected.png)
-![Screenshot of 'local.rules' containing the correct SYN flood rule](screenshots/local_rules.png)
-![Screenshot of 'snort.lua' showing the correct event_filter](screenshots/snort_lua.png)
+![Snort alert showing SYN flood detection](Screenshots/syn_flood_detected.png)
+![Screenshot of 'local.rules' containing the correct SYN flood rule](Screenshots/local_rules.png)
+![Screenshot of 'snort.lua' showing the correct event_filter](Screenshots/snort_lua.png)
