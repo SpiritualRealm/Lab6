@@ -260,6 +260,9 @@ While `detection_filter` identifies the attack condition, `event_filter` is nece
 **3. How would using `--rand-source` affect Snort’s detection?**
 In this specific lab setup, using `--rand-source` would not bypass Snort's detection. Because the rule's `detection_filter` uses `track by_dst`, Snort is tracking the aggregate volume of SYN packets hitting the victim server's IP address, regardless of where they come from. If the rule were configured to track by source (`track by_src`), `--rand-source` could successfully evade detection because no single spoofed source IP would reach the packet threshold. However, in how we have it set up it will still trigger on every new connection attempt. This would work, but it brings us back to the problem of having meaningless and unmanageable alerts.
 
+In this specific lab setup, using `--rand-source` would not bypass Snort's detection. Because the rule's `detection_filter` uses `track by_dst`, Snort is tracking the aggregate volume of SYN packets hitting the victim server's IP address, regardless of where they come from. If the rule were configured to track by source (`track by_src`), `--rand-source` would successfully evade detection because no single spoofed source IP would reach the 100-packet threshold.
+
+
 **4. Why can't Snort itself block SYN floods directly?**
 In this architecture, Snort is deployed as a passive Intrusion Detection System (IDS) rather than an active prevention system. It operates in promiscuous mode, sniffing a copy of the network traffic off the wire to analyze it and generate alerts. Because it is not sitting inline with the traffic flow, it does not have the capability to intercept, drop, or modify the malicious packets traveling from the attacker to the target.
 
@@ -267,8 +270,14 @@ In this architecture, Snort is deployed as a passive Intrusion Detection System 
 Unlike a passive IDS, a firewall or an Intrusion Prevention System (IPS) sits directly inline with network traffic and can actively manipulate it. To defend against SYN floods, an IPS or firewall can deploy mitigation techniques such as dropping packets that exceed rate limits, utilizing SYN cookies to validate connection requests without allocating memory, or dynamically blacklisting offending source IP addresses to block the flood before it exhausts the target server's resources.
 
 ### **Screenshots**:
+
 ![Snort alert showing SYN flood detection.](Screenshots/syn_flood_detected.png)
 ![Local Rules](Screenshots/local_rules.png)
 ![Snort](Screenshots/snort_lua.png)
 
+
+=======
+![Snort alert showing SYN flood detection](Screenshots/syn_flood_detected.png)
+![Screenshot of 'local.rules' containing the correct SYN flood rule](Screenshots/local_rules.png)
+![Screenshot of 'snort.lua' showing the correct event_filter](Screenshots/snort_lua.png)
 
