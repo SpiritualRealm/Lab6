@@ -250,15 +250,25 @@ Encryption improves security but makes content-based IDS detection more challeng
 ## **Deliverables for Task 5**
 
 ### **Questions**:
-1. Why is `detection_filter` important for detecting SYN floods?
-2. Why is `event_filter` important? What happens if we do not define this?
-3. How would using `--rand-source` affect Snort’s detection?
-4. Why can't Snort itself block SYN floods directly?
-5. How could a firewall or IPS help defend against SYN floods?
+
+**1. Why is `detection_filter` important for detecting SYN floods?**
+A single SYN packet is normal network behavior representing the start of a standard TCP handshake. A SYN flood, however, is characterized by a massive, rapid volume of these packets. The `detection_filter` is crucial because it tracks the rate of these packets, allowing Snort to trigger an alert only when a specific threshold is crossed (e.g., 100 SYN packets in 1 second directed at the same destination). This enables the system to differentiate between legitimate traffic and a denial-of-service attack.
+
+**2. Why is `event_filter` important? What happens if we do not define this?**
+While `detection_filter` identifies the attack condition, `event_filter` is necessary to control the volume of alerts generated. Without an `event_filter`, Snort would continuously evaluate the flood and generate an alert for almost every packet once the threshold is met, potentially creating thousands of alerts per second. This would overwhelm the IDS logs, consume system resources, and make incident response highly difficult. Defining it ensures Snort limits the output (e.g., to 1 alert every 10 seconds per victim).
+
+**3. How would using `--rand-source` affect Snort’s detection?**
+In this specific lab setup, using `--rand-source` would not bypass Snort's detection. Because the rule's `detection_filter` uses `track by_dst`, Snort is tracking the aggregate volume of SYN packets hitting the victim server's IP address, regardless of where they come from. If the rule were configured to track by source (`track by_src`), `--rand-source` could successfully evade detection because no single spoofed source IP would reach the packet threshold. However, in how we have it set up it will still trigger on every new connection attempt. This would work, but it brings us back to the problem of having meaningless and unmanageable alerts.
+
+**4. Why can't Snort itself block SYN floods directly?**
+In this architecture, Snort is deployed as a passive Intrusion Detection System (IDS) rather than an active prevention system. It operates in promiscuous mode, sniffing a copy of the network traffic off the wire to analyze it and generate alerts. Because it is not sitting inline with the traffic flow, it does not have the capability to intercept, drop, or modify the malicious packets traveling from the attacker to the target.
+
+**5. How could a firewall or IPS help defend against SYN floods?**
+Unlike a passive IDS, a firewall or an Intrusion Prevention System (IPS) sits directly inline with network traffic and can actively manipulate it. To defend against SYN floods, an IPS or firewall can deploy mitigation techniques such as dropping packets that exceed rate limits, utilizing SYN cookies to validate connection requests without allocating memory, or dynamically blacklisting offending source IP addresses to block the flood before it exhausts the target server's resources.
 
 ### **Screenshots**:
-- Snort alert showing SYN flood detection.
-- Screenshot of `local.rules` containing the correct SYN flood rule.
-- Screenshot of `snort.lua` showing the correct `event_filter`.
+![Snort alert showing SYN flood detection.](Screenshots/syn_flood_detected.png)
+![Local Rules](Screenshots/local_rules.png)
+![Snort](Screenshots/snort_lua.png)
 
 
