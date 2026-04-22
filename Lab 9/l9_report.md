@@ -70,7 +70,7 @@ NumPy is a foundational Python library for numerical computing that provides sup
 ## **🔹 Questions**:
 1. What should you put in place of the missing `training_size` calculation?
 
-   `int(len(inputs) * (cv_fold_n - 1) / cv_fold_n)`
+`int(len(inputs) * (cv_fold_n - 1) / cv_fold_n)`
   
 2. Explain why calculating training size correctly is important.
 
