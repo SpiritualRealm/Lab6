@@ -83,8 +83,13 @@ NumPy is a foundational Python library for numerical computing that provides sup
 ---
 
 ## **🔹 Questions**:
-1. Explain the differences between Accuracy, Precision, and Recall.  
+1. Explain the differences between Accuracy, Precision, and Recall.
+
+*Accuracy, Precision, and Recall are all evaluation metrics for classification models, but they focus on different aspects of performance. Accuracy measures the overall correctness of a model: the proportion of total predictions that are correct (both positive and negative). It works well when classes are balanced, but can be misleading if one class dominates. Precision measures how many of the instances predicted as positive are actually positive. In other words, it focuses on the quality of positive predictions and penalizes false positives. Recall (also called sensitivity) measures how many of the actual positive cases the model successfully identifies, emphasizing the ability to catch all positives and penalizing false negatives.*
+
 2. In what situations is Precision more important than Accuracy? Give a phishing detection example.
+
+*Precision is a better metric than accuracy when false positives are costly or misleading, especially in imbalanced datasets. For example, in phishing website detection, suppose most websites are legitimate and only a small fraction are phishing. A model could achieve high accuracy by labeling almost everything as legitimate, yet still miss many phishing sites. However, if the system flags a website as phishing, high precision ensures that it is very likely truly malicious—important to avoid unnecessarily blocking legitimate websites or eroding user trust.*
 
 ---
 
