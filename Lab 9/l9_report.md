@@ -55,8 +55,11 @@
 ---
 
 ## **🔹 Questions**:
-1. What is the `scikit-learn` module and what is its role in this lab?  
+1. What is the `scikit-learn` module and what is its role in this lab?
+The scikit-learn module is a widely used open-source Python library built on top of NumPy and SciPy that provides simple and efficient tools for machine learning and data analysis. It includes algorithms for classification, regression, clustering, dimensionality reduction, model selection, and preprocessing, making it especially useful for building predictive models, evaluating performance, and preparing datasets in a consistent workflow. In this lab, it's role is to help train a machine on detecting phishing websites through analysis of datasets, and enable it to predict with accuracy when a website is a phishing website, or a legitimate website.
+
 2. What is the `numpy` module and how is it used for data analysis?
+NumPy is a foundational Python library for numerical computing that provides support for large, multi-dimensional arrays and matrices, along with a collection of mathematical functions to operate on them efficiently. In data analysis, NumPy is used for fast computations, data manipulation, linear algebra operations, and as the underlying structure for many other libraries (like pandas and scikit-learn), enabling efficient handling of numerical datasets.
 
 ---
 
@@ -65,8 +68,13 @@
 ---
 
 ## **🔹 Questions**:
-1. What should you put in place of the missing `training_size` calculation?  
+1. What should you put in place of the missing `training_size` calculation?
+
+int(len(inputs) * (cv_fold_n - 1) / cv_fold_n)
+  
 2. Explain why calculating training size correctly is important.
+
+*Calculating the training size correctly matters because it directly affects how well your model learns and how reliably you can evaluate it. If you allocate too much data to training, your model may perform well on familiar data but give an overly optimistic evaluation since the test set is too small to represent real-world variation. On the other hand, if the training set is too small, the model won’t have enough examples to learn meaningful patterns, leading to poor performance. Using the correct proportion (like 80/20 for 5-fold splitting) ensures a good balance: enough data for the model to learn effectively, and enough unseen data to fairly assess how well it generalizes to new inputs.*
 
 ---
 
