@@ -12,12 +12,14 @@
 
 ## **🔹 Questions**:
 1. Explain the feature "Redirecting using `//`".
+
 *The "Redirecting using `//`" feature checks whether a URL uses double slashes (//) beyond the standard protocol part (like http://). In legitimate URLs, // typically appears only once after the protocol. If it appears later in the path, it may indicate redirection to another site, which attackers use to mislead users.
    Legitimate: No extra // in the path
    Suspicious: // appears in an unusual position, suggesting possible redirection
    Phishing: Clear misuse of // to redirect users to a malicious page*
   
 2. Explain the feature "Domain registration length".
+
 *The "domain registration length" feature measures how long a domain is registered for. Legitimate businesses usually register domains for longer periods, while phishing sites tend to use short-term registrations.
    Legitimate: Domain registered for more than a year
    Suspicious: Registration length is borderline or unclear
@@ -31,19 +33,19 @@
    Suspicious: Multiple subdomains
    Phishing: Excessive or misleading subdomains*
 
-   *Example of a suspicious domain:
-    login.security.bank.example.verify-user.com
+*Example of a suspicious domain: "login.security.bank.example.verify-user.com"
     This uses multiple subdomains to appear trustworthy but is actually misleading.*
 
 4. Identify the three most differentiating features and justify your choice.
+
 *Top three most differentiating features (opinion)
    Domain age/registration length – Phishing sites are often short-lived, making this a strong indicator.
    URL structure (like subdomains and redirects) – Attackers manipulate URL complexity to deceive users.
    Presence of HTTPS or security indicators – Although not always reliable alone, combined with other signals it helps distinguish legitimate sites.*
-
 - These features stand out due to directly reflecting attacker behavior making them harder to fake consistently as time passes.
  
 5. Explain the concept of information gain in Decision Trees.
+
 *Decision trees use information gain to decide which feature to split on at each step. Information gain measures how much uncertainty (entropy) is reduced after splitting the data based on a feature. The goal is to choose the feature that best separates the data into distinct classes. In simple terms, the tree evaluates all features and selects the one that creates the clearest separation between classes (e.g., phishing vs. legitimate). A higher information gain means the feature provides more useful information for classification. As the tree grows, it repeatedly applies this process: selecting the feature with the highest information gain, splitting the dataset, and continuing until the data is well classified or no further meaningful splits can be made. This is how the model gradually builds a structure that can make predictions on new data.*
 
 ---
