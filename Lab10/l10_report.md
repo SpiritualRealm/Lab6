@@ -8,10 +8,12 @@
 # **Task 1: RSA Key Generation**
 
 ## 🔹 Screenshots:
-- [ ] Terminal output: `RSA keys generated for Alice and Bob.`
+- [ ] Terminal output: `RSA keys generated for Alice and Bob.
+
 ![Screenshot 1](Lab10/Screenshots/Task_1_RSA_Key_Terminal_Output.png)
 
 - [ ] Created files: `alice_priv.pem`, `alice_pub.pem`, `bob_priv.pem`, `bob_pub.pem`
+
 ![Screenshot 2](Lab10/Screenshots/Task_1_RSA_Key_Files.png)
 
 ## 🔹 Questions:
