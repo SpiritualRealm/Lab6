@@ -10,11 +10,11 @@
 ## 🔹 Screenshots:
 - [ ] Terminal output: `RSA keys generated for Alice and Bob.
 
-![Screenshot](/Lab10/Screenshots/Task_1_RSA_Key_Terminal_Output.png)
+![Screenshot 1](/Lab10/Screenshots/Task_1_RSA_Key_Terminal_Output.png)
 
 - [ ] Created files: `alice_priv.pem`, `alice_pub.pem`, `bob_priv.pem`, `bob_pub.pem`
 
-![Screenshot 2](./Lab10/Screenshots/Task_1_RSA_Key_Files.png)
+![Screenshot 2](/Lab10/Screenshots/Task_1_RSA_Key_Files.png)
 
 ## 🔹 Questions:
 1. What does the `default_backend()` do?  
