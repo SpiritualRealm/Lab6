@@ -10,7 +10,7 @@
 ## 🔹 Screenshots:
 - [ ] Terminal output: `RSA keys generated for Alice and Bob.
 
-![Screenshot](Lab6/Lab10/Screenshots/Task_1_RSA_Key_Terminal_Output.png)
+![Screenshot](/Lab10/Screenshots/Task_1_RSA_Key_Terminal_Output.png)
 
 - [ ] Created files: `alice_priv.pem`, `alice_pub.pem`, `bob_priv.pem`, `bob_pub.pem`
 
