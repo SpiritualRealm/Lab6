@@ -1,7 +1,7 @@
 # **Lab 10 Report**  
 ##### CSCY 4742 – Cybersecurity Programming and Analytics, Spring 2026
 
-**Name & Student ID**: [Your Full Name], [Your Student ID]  
+**Name & Student ID**: John Paul Bennett Jr., 110412273  
 
 ---
 
