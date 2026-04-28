@@ -5,6 +5,9 @@
 
 ---
 
+
+![Screenshot 1](Lab6/Lab10/Screenshots/Task_1_RSA_Key_Terminal_Output.png)
+
 # **Task 1: RSA Key Generation**
 
 ## 🔹 Screenshots:
