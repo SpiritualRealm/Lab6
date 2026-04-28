@@ -17,16 +17,35 @@
 ![Screenshot 2](/Lab10/Screenshots/Task_1_RSA_Key_Files.png)
 
 ## 🔹 Questions:
-1. What does the `default_backend()` do?  
-2. Why use a library for key generation rather than writing our own algorithm?  
-3. What is the role of the public exponent (65537)?  
-4. What are the trade-offs of using larger vs. smaller key sizes?  
-5. Why are private keys usually stored in PEM format?  
-6. What are the risks of not encrypting private key files?  
-7. Why can public keys be shared openly?  
-8. What format is `SubjectPublicKeyInfo`, and why do we use it?  
-9. Why do Alice and Bob each need their own key pair?  
-10. Can one key pair be reused for both parties?  
+1. What does the `default_backend()` do?
+- The `default_backend()` function provides a trusted cryptographic engine that handles low-level operations securely and efficiently.
+ 
+2. Why use a library for key generation rather than writing our own algorithm?
+- Using a library avoids mistakes and vulnerabilities that often occur in custom-built cryptographic algorithms.
+
+3. What is the role of the public exponent (65537)?
+- The public exponent (65537) balances security and performance, being large enough to prevent attacks but efficient for computation.
+
+4. What are the trade-offs of using larger vs. smaller key sizes?
+- Larger key sizes increase security but slow down performance, while smaller keys are faster but more vulnerable to attacks.
+
+5. Why are private keys usually stored in PEM format?
+- Private keys are stored in PEM format because it is a standardized, portable, and widely supported text-based encoding.
+
+6. What are the risks of not encrypting private key files?
+- Not encrypting private key files risks unauthorized access, leading to identity theft or decryption of sensitive data.
+
+7. Why can public keys be shared openly?
+- Public keys can be shared openly because they cannot be used to derive the private key.
+
+8. What format is `SubjectPublicKeyInfo`, and why do we use it?
+- `SubjectPublicKeyInfo` is an ASN.1 structure that standardizes how public keys and their algorithms are represented.
+
+9. Why do Alice and Bob each need their own key pair?
+- Alice and Bob each need their own key pair to securely exchange messages and verify identities independently.
+
+10. Can one key pair be reused for both parties?
+- One key pair should not be reused for both parties, as it breaks the principle of separate identities and reduces security.
 
 ---
 
