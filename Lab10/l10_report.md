@@ -52,29 +52,69 @@
 # **Task 2: Sender Encryption Pipeline**
 
 ## 🔹 Screenshots:
-- [ ] Terminal output showing AES, HMAC keys and IV  
+- [ ] Terminal output showing AES, HMAC keys and IV
+![Screenshot 3](/Lab10/Screenshots/Task_2_Keys_and_IV.png)
+
 - [ ] Output of digital signature  
+![Screenshot 4](/Lab10/Screenshots/Task_2_Signature_output.png)
+
 - [ ] Encrypted keys file saved  
+![Screenshot 5](/Lab10/Screenshots/Task_2_Saved_Encrypted_Keys_File.png)
+
 - [ ] Encrypted message file saved  
+![Screenshot 6](/Lab10/Screenshots/Task_2_Saved_Encrypted_Message_File.png)
+
 - [ ] HMAC file saved  
+![Screenshot 7](/Lab10/Screenshots/Task_2_HMAC_File.png)
 
 ## 🔹 Questions:
-1. Why should new keys be generated for each session?  
+1. Why should new keys be generated for each session?
+- New keys per session ensure forward secrecy and limit damage if a key is compromised.
+
 2. What role does the IV play in CTR mode encryption?  
+- The IV in CTR mode provides uniqueness so identical plaintexts produce different ciphertexts.
+
 3. Why we generate a separate key for AES (encryption) and HMAC?  
+- Separate keys prevent cross-protocol attacks and isolate encryption from integrity functions.
+
 4. What is Alice proving by signing the keys?  
+- Alice is proving authenticity and ownership of the keys.
+
 5. What would happen if we didn’t sign the keys?  
+- Without signatures, an attacker could substitute their own keys (man-in-the-middle).
+
 6. Why does RSA use PSS padding for signatures and OAEP padding for encryption? What security properties does each padding scheme provide, and why are they not interchangeable?  
+- RSA uses PSS for signatures (secure randomness, forgery resistance) and OAEP for encryption (semantic security); they serve different security goals and aren’t interchangeable.
+
 7. Why is Bob’s public key used here?  
+- Bob’s public key is used so only Bob can decrypt with his private key.
+
 8. What protection does this provide over just storing the keys locally?  
+- It protects keys in transit and ensures only the intended recipient can access them.
+
 9. What is the difference between using RSA for encryption and for digital signing? Which key is used in each case, and why?  
+- Encryption uses the recipient’s public key to ensure confidentiality; signing uses the sender’s private key to ensure authenticity.
+
 10. Why is padding required before encrypting with RSA? What risks arise if we encrypt raw data without padding?  
+- Padding adds randomness and structure; without it, RSA is deterministic and vulnerable to attacks.
+
 11. What is OAEP padding, and how does it work? How does it differ from PSS padding, and why is each suited for its specific purpose (encryption vs. signing)?  
+- OAEP randomizes plaintext for secure encryption; PSS randomizes signatures for unforgeability—each is tailored to its role.
+
 12. Why is AES used to encrypt the message instead of RSA?  
+- AES is faster and more efficient for large data, while RSA is slow and used mainly for key exchange.
+
 13. Why do we add the sender name and timestamp?  
+- They provide context, freshness, and help prevent replay attacks.
+
 14. Why do we generate the HMAC *after* encryption?  
+- HMAC is computed after encryption to protect the ciphertext’s integrity (encrypt-then-MAC).
+
 15. What would happen if the encrypted message were changed in transit?  
+- The HMAC verification would fail, revealing tampering.
+
 16. Why must the HMAC use a separate key from the AES encryption key? What could go wrong if the same key were reused for both encryption and integrity?  
+- Reusing the same key could leak information or enable attacks that break confidentiality or integrity.
 
 ---
 
