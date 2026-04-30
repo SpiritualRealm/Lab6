@@ -127,20 +127,33 @@
 - [ ] Decrypted message output  
 - [ ] Parsed sender, timestamp, message  
 - [ ] Digital signature verification output  
+![All verifications as displayed in the Terminal](screenshots/terminal_output.jpg "All verifications as displayed in the Terminal")
 
 ## 🔹 Questions:
 1. Why does Bob need both Alice’s public key and his own private key?  
+  This is because Alice, when sending the message, used her private key and his public key to generate the cyphertext.  
 2. Why is it secure to share public keys, but not private keys?  
+  This is because, in asymetirc encryption, public and private keys are mathematically linked through trapdoor functions. These are mathematical operations that are easy to perform in one direction but nearly impossible to reverse without a specific piece of information. 
 3. Why is Bob the only person who can decrypt the session keys?  
+  As before, his public key was used to encypt the AES/HMAC keys.
 4. Why is the decrypted byte stream split into these three parts?  
+  This is is as a direct result of how we chose to implement the encryption when at the start of the sender.py we defined: `AES_key = os.urandom(32)`, `HMAC_key = os.urandom(32)` and, `iv = os.urandom(16)`.
 5. Why is HMAC checked before decrypting the message?  
+  Because HMAC is used to ensure integrity [that the file has not been altered]. This test is done first because an altered payload might be compromised.
 6. What would happen if we skipped HMAC verification?  
+  We would have no idea if the message encryped was sent by Alice.
 7. Why is AES-CTR used over other AES modes like CBC?  
+  The primary reason is parallelism. CBR requires that the previous block be decrypted to decrypt the next leading to extreme overhead if one needed to say, decrypt the contents of block 1000 of 12000.
 8. What would happen if the IV used here didn’t match the sender’s IV?  
+  CTR mode works by encrypting a counter block to create a "keystream," which is then XORed with your message. If it does not match the sender's the message will be complete nonsense.
 9. Why is `rsplit(..., 3)` used here?  
+  This is a common trick used when the first field (like a username or a system path) might accidentally contain the delimiter itself.
 10. What are some risks of relying on `\n` as a delimiter?  
+  If a user can influence the message or sender fields, they can "break out" of their assigned variable.
 11. What is Alice signing, and why not the full message?  
+  Alice is signing a SHA-256 hash of the concatenated keys and the IV: hashed_keys.
 12. Why is the digital signature the final check in the process?  
+  The signature is the "Root of Trust." In the hierarchy of this decryption process, it acts as the final gatekeeper for two critical reasons: Authentication and Non-Repudiation.
 
 ---
 
