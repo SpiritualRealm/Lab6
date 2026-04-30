@@ -8,11 +8,11 @@
 # **Task 1: RSA Key Generation**
 
 ## 🔹 Screenshots:
-- [ ] Terminal output: `RSA keys generated for Alice and Bob.
+- [x] Terminal output: `RSA keys generated for Alice and Bob.
 
 ![Screenshot 1](/Lab10/Screenshots/Task_1_RSA_Key_Terminal_Output.png)
 
-- [ ] Created files: `alice_priv.pem`, `alice_pub.pem`, `bob_priv.pem`, `bob_pub.pem`
+- [x] Created files: `alice_priv.pem`, `alice_pub.pem`, `bob_priv.pem`, `bob_pub.pem`
 
 ![Screenshot 2](/Lab10/Screenshots/Task_1_RSA_Key_Files.png)
 
@@ -52,19 +52,19 @@
 # **Task 2: Sender Encryption Pipeline**
 
 ## 🔹 Screenshots:
-- [ ] Terminal output showing AES, HMAC keys and IV
+- [x] Terminal output showing AES, HMAC keys and IV
 ![Screenshot 3](/Lab10/Screenshots/Task_2_Keys_and_IV.png)
 
-- [ ] Output of digital signature  
+- [x] Output of digital signature  
 ![Screenshot 4](/Lab10/Screenshots/Task_2_Signature_output.png)
 
-- [ ] Encrypted keys file saved  
+- [x] Encrypted keys file saved  
 ![Screenshot 5](/Lab10/Screenshots/Task_2_Saved_Encrypted_Keys_File.png)
 
-- [ ] Encrypted message file saved  
+- [x] Encrypted message file saved  
 ![Screenshot 6](/Lab10/Screenshots/Task_2_Saved_Encrypted_Message_File.png)
 
-- [ ] HMAC file saved  
+- [x] HMAC file saved  
 ![Screenshot 7](/Lab10/Screenshots/Task_2_HMAC_File.png)
 
 ## 🔹 Questions:
