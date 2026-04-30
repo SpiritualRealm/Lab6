@@ -152,13 +152,13 @@
 - [x] Output: signature failure
 
 ### Step 1: Test the Correct (Expected) Case
-![Successful Verification](screenshots/task4_success.png)
+![Successful Verification](/Lab10/Screenshots/task4_success.png)
 
 ### Step 2: Simulate Message Tampering (HMAC Failure)
-![HMAC Failure](screenshots/task4_hmac_fail.png)
+![HMAC Failure](/Lab10/Screenshots/task4_hmac_fail.png)
 
 ### Step 3: Simulate Signature Forgery (Wrong Public Key)
-![Signature Failure](screenshots/task4_signature_fail.png)
+![Signature Failure](/Lab10/Screenshots/task4_signature_fail.png)
 
 ---
 
