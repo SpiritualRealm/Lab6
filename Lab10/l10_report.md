@@ -147,20 +147,51 @@
 # **Task 4: Verification & Error Handling**
 
 ## 🔹 Screenshots:
-- [ ] Output: successful verification  
-- [ ] Output: HMAC failure  
-- [ ] Output: signature failure  
+- [x] Output: successful verification
+- [x] Output: HMAC failure
+- [x] Output: signature failure
+
+### Step 1: Test the Correct (Expected) Case
+![Successful Verification](screenshots/task4_success.png)
+
+### Step 2: Simulate Message Tampering (HMAC Failure)
+![HMAC Failure](screenshots/task4_hmac_fail.png)
+
+### Step 3: Simulate Signature Forgery (Wrong Public Key)
+![Signature Failure](screenshots/task4_signature_fail.png)
+
+---
 
 ## 🔹 Questions:
 1. What role does the HMAC play in this process?  
-2. What is the digital signature verifying?  
-3. Why is HMAC verification done before decryption?  
-4. What would happen if Bob skipped this check?  
-5. Why combine symmetric (AES) and asymmetric (RSA) encryption instead of just using RSA for everything?  
-6. Why do we use digital signatures (signing with RSA) if we already use HMAC for integrity?  
-7. Why are session keys (AES/HMAC/IV) randomly generated for each message instead of reused?  
-8. Why do we encrypt the keys, and not the entire message, using RSA?  
-9. How does adding a timestamp improve the security of the message? What are replay attacks?  
-10. What threat would be harder to detect if the signature was placed on the full message rather than just the key materials?  
-11. How does separating encryption (AES) from integrity (HMAC) help modularize cryptographic responsibilities?  
+**Answer:** It ensures message integrity, confirming that the ciphertext was not altered, corrupted, or tampered with while in transit.
 
+2. What is the digital signature verifying?  
+**Answer:** It verifies the authenticity and non-repudiation of the message. It mathematically proves that the owner of Alice's private key generated the session keys.
+
+3. Why is HMAC verification done before decryption?  
+**Answer:** It guarantees the data is safe to process. Decrypting tampered ciphertext can lead to unhandled exceptions, resource exhaustion, or cryptographic padding oracle attacks.
+
+4. What would happen if Bob skipped this check?  
+**Answer:** Bob would process potentially malicious or malformed data, resulting in garbage output and breaking the trust model of the communication channel.
+
+5. Why combine symmetric (AES) and asymmetric (RSA) encryption instead of just using RSA for everything?  
+**Answer:** RSA is slow and computationally expensive, with strict limits on the size of the data it can encrypt. AES is incredibly fast and can encrypt massive files. Hybrid encryption uses the security of RSA to safely share the keys, and the speed of AES to handle the actual data.
+
+6. Why do we use digital signatures (signing with RSA) if we already use HMAC for integrity?  
+**Answer:** HMAC relies on a shared symmetric key, meaning either Alice or Bob could have generated the HMAC (lacking non-repudiation). A digital signature uses a private key that only Alice has, proving indisputably that she sent it.
+
+7. Why are session keys (AES/HMAC/IV) randomly generated for each message instead of reused?  
+**Answer:** Random generation provides perfect forward secrecy. If an attacker compromises a single session key, they only gain access to that specific message, not the entire history of communications. It also prevents replay attacks.
+
+8. Why do we encrypt the keys, and not the entire message, using RSA?  
+**Answer:** Encrypting large datasets with RSA is incredibly slow and constrained by the RSA key size limit. Encrypting just the small session key bundle is highly efficient and leaves the heavy lifting to AES.
+
+9. How does adding a timestamp improve the security of the message? What are replay attacks?  
+**Answer:** A replay attack occurs when an adversary intercepts a valid, encrypted message and maliciously re-transmits it later to duplicate an action. A timestamp allows the receiver to check the message's age and reject it if it is too old.
+
+10. What threat would be harder to detect if the signature was placed on the full message rather than just the key materials?  
+**Answer:** If only the message ciphertext is signed, an attacker who compromises the session keys could potentially separate the payload, encrypt a new message, and cause confusion. Signing the key material tightly binds the cryptographic parameters of that specific session to Alice's identity.
+
+11. How does separating encryption (AES) from integrity (HMAC) help modularize cryptographic responsibilities?  
+**Answer:** It allows the system to follow the principle of separation of concerns. If a vulnerability is discovered in the hashing algorithm (HMAC), it can be swapped out independently without having to re-architect the AES encryption implementation.
