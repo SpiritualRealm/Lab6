@@ -127,7 +127,7 @@
 - [ ] Decrypted message output  
 - [ ] Parsed sender, timestamp, message  
 - [ ] Digital signature verification output  
-![All verifications as displayed in the Terminal](screenshots/terminal_output.jpg "All verifications as displayed in the Terminal")
+![All verifications as displayed in the Terminal](/Lab10/Screenshots/terminal_output.jpg "All verifications as displayed in the Terminal")
 
 ## 🔹 Questions:
 1. Why does Bob need both Alice’s public key and his own private key?  
