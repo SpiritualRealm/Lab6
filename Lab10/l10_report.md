@@ -152,7 +152,7 @@
 - [x] Output: signature failure
 
 ### Step 1: Test the Correct (Expected) Case
-![Successful Verification](/Lab10/Screenshots/task4_success.png)
+![Successful Verification](/Lab10/Screenshots/task3_receiver_success.png)
 
 ### Step 2: Simulate Message Tampering (HMAC Failure)
 ![HMAC Failure](/Lab10/Screenshots/task4_hmac_fail.png)
