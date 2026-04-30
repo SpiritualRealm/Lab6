@@ -121,12 +121,12 @@
 # **Task 3: Receiver Verification Pipeline**
 
 ## 🔹 Screenshots:
-- [ ] File and key loading  
-- [ ] Decrypted AES, HMAC, IV values  
-- [ ] HMAC verification output  
-- [ ] Decrypted message output  
-- [ ] Parsed sender, timestamp, message  
-- [ ] Digital signature verification output  
+- [x] File and key loading  
+- [x] Decrypted AES, HMAC, IV values  
+- [x] HMAC verification output  
+- [x] Decrypted message output  
+- [x] Parsed sender, timestamp, message  
+- [x] Digital signature verification output  
 ![All verifications as displayed in the Terminal](/Lab10/Screenshots/terminal_output.jpg "All verifications as displayed in the Terminal")
 
 ## 🔹 Questions:
